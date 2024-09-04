@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Student Dashboard</title>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 p-4 text-white flex justify-between">
+        <div class="flex items-center">
+            <img src="/static/logo.png" alt="Logo" class="h-8 mr-4">
+            <nav>
+                <a href="#" class="px-3 py-2 hover:bg-blue-700 rounded">Registration</a>
+                <a href="#" class="px-3 py-2 hover:bg-blue-700 rounded">Results</a>
+                <a href="#" class="px-3 py-2 hover:bg-blue-700 rounded">Profile</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Registration Section -->
+    <section class="container mx-auto mt-6">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4">Semester Registration</h2>
+            <form method="POST">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Course Selection</label>
+                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none">
+                        <option>Course 1</option>
+                        <option>Course 2</option>
+                        <option>Course 3</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Register</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="container mx-auto mt-6">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4">Previous Semester Results</h2>
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr>
+                        <th class="border-b p-3">Course</th>
+                        <th class="border-b p-3">Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="border-b p-3">Course 1</td>
+                        <td class="border-b p-3">A</td>
+                    </tr>
+                    <!-- Add more rows as necessary -->
+                </tbody>
+            </table>
+            <button class="mt-4 bg-red-500 text-white px-4 py-2 rounded" onclick="openMissingResultsForm()">Missing Results</button>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="container mx-auto mt-6">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4">Profile</h2>
+            <p><strong>Name:</strong> John Doe</p>
+            <p><strong>Student ID:</strong> 123456</p>
+            <p><strong>Email:</strong> john.doe@example.com</p>
+            <button class="mt-4 bg-yellow-500 text-white px-4 py-2 rounded">Edit Profile</button>
+        </div>
+    </section>
+
+    <!-- Modal for Missing Results -->
+    <div id="missingResultsForm" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4">Report Missing Results</h2>
+            <form method="POST">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Course ID</label>
+                    <input type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Course Name</label>
+                    <input type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700">Date of Exam</label>
+                    <input type="date" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none">
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+                <button type="button" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded" onclick="closeMissingResultsForm()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openMissingResultsForm() {
+            document.getElementById('missingResultsForm').classList.remove('hidden');
+        }
+        function closeMissingResultsForm() {
+            document.getElementById('missingResultsForm').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
