@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-5xl mx-auto py-10">
+        <h1 class="text-3xl font-bold text-center mb-8">Student Results</h1>
+        
+        <!-- Results Table -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <table class="min-w-full bg-white">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="py-2 px-4 text-left">Course Code</th>
+                        <th class="py-2 px-4 text-left">Course Name</th>
+                        <th class="py-2 px-4 text-left">Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td class="py-2 px-4">{{ result.course_code }}</td>
+                        <td class="py-2 px-4">{{ result.course_name }}</td>
+                        <td class="py-2 px-4">{{ result.grade }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Report Missing Results Button -->
+        <div class="text-center mt-6">
+            <button id="reportBtn" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">Report Missing Results</button>
+        </div>
+
+        <!-- Modal for Reporting Missing Results -->
+        <div id="reportModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-md max-w-lg w-full">
+                <h2 class="text-2xl font-bold mb-4">Report Missing Results</h2>
+                <form method="POST" action="/report_missing_results">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Course Name</label>
+                        <input type="text" name="course_name" class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Course Code</label>
+                        <input type="text" name="course_code" class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Submit Report</button>
+                        <button type="button" id="closeModal" class="ml-4 px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        const reportBtn = document.getElementById('reportBtn');
+        const reportModal = document.getElementById('reportModal');
+        const closeModal = document.getElementById('closeModal');
+
+        reportBtn.addEventListener('click', () => {
+            reportModal.classList.remove('hidden');
+        });
+
+        closeModal.addEventListener('click', () => {
+            reportModal.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

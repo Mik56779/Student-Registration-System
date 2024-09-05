@@ -10,13 +10,24 @@
         <div class="flex items-center">
             <img src="/static/logo.png" alt="Logo" class="h-8 mr-4">
             <nav>
-                <a href="#" class="px-3 py-2 hover:bg-blue-700 rounded">Registration</a>
-                <a href="#" class="px-3 py-2 hover:bg-blue-700 rounded">Results</a>
-                <a href="#" class="px-3 py-2 hover:bg-blue-700 rounded">Profile</a>
+                <a href="{{ url_for('std_reg') }}" class="px-3 py-2 hover:bg-blue-700 rounded">Registration</a>
+                <a href="{{ url_for('student_results', student_id=student_id) }}" class="px-3 py-2 hover:bg-blue-700 rounded">Results</a>
+                <a href="{{ url_for('student_profile', student_id=student_id) }}" class="px-3 py-2 hover:bg-blue-700 rounded">Profile</a>
             </nav>
         </div>
     </header>
-
+    
+    <!-- Main Content -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="mb-4">
+            <h2 class="text-2xl font-bold mb-2">Welcome, {{ student.name }}</h2>
+            <p class="text-lg">Student ID: {{ student_id }}</p>
+            <p class="text-lg">Program: {{ student.program }}</p>
+            <p class="text-lg">Year: {{ student.year }}</p>
+            <p class="text-lg">Semester: {{ student.semester }}</p>
+        </div>
+    </div>
+    
     <!-- Registration Section -->
     <section class="container mx-auto mt-6">
         <div class="bg-white p-6 rounded-lg shadow-md">
@@ -47,11 +58,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for result in results %}
                     <tr>
-                        <td class="border-b p-3">Course 1</td>
-                        <td class="border-b p-3">A</td>
+                        <td class="border-b p-3">{{ result.course_name }}</td>
+                        <td class="border-b p-3">{{ result.grade }}</td>
                     </tr>
-                    <!-- Add more rows as necessary -->
+                    {% endfor %}
                 </tbody>
             </table>
             <button class="mt-4 bg-red-500 text-white px-4 py-2 rounded" onclick="openMissingResultsForm()">Missing Results</button>
@@ -62,9 +74,9 @@
     <section class="container mx-auto mt-6">
         <div class="bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-xl font-bold mb-4">Profile</h2>
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Student ID:</strong> 123456</p>
-            <p><strong>Email:</strong> john.doe@example.com</p>
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Student ID:</strong> {{ student_id }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
             <button class="mt-4 bg-yellow-500 text-white px-4 py-2 rounded">Edit Profile</button>
         </div>
     </section>
