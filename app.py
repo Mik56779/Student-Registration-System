@@ -1,9 +1,10 @@
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, session, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, FieldList, FormField, SubmitField
-from wtforms.validators import DataRequired, Email
+from wtforms import StringField, SelectField, FieldList, FormField, SubmitField, PasswordField
+from wtforms.validators import DataRequired, Email, Length, EqualTo
 from flask_migrate import Migrate
+from werkzeug.security import check_password_hash
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -13,6 +14,12 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 # Initialize the database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+# Form for login
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Length(min=5, max=50)])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')
 
 # Models
 class Student(db.Model):
@@ -62,6 +69,70 @@ class RegistrationForm(FlaskForm):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+from wtforms import SelectMultipleField
+
+class RegistrationForm(FlaskForm):
+    courses = SelectMultipleField('Courses', coerce=int)
+    submit = SubmitField('Register')
+
+@app.route('/student/register', methods=['GET', 'POST'])
+def register_courses():
+    if 'user_role' in session and session['user_role'] == 'student':
+        student_id = session['user_id']
+        form = RegistrationForm()
+        form.courses.choices = [(course.id, course.name) for course in Course.query.all()]
+
+        if form.validate_on_submit():
+            selected_courses = form.courses.data
+            for course_id in selected_courses:
+                registration = Registration(student_id=student_id, course_id=course_id)
+                db.session.add(registration)
+            db.session.commit()
+            flash('Courses registered successfully!', 'success')
+            return redirect(url_for('student_dashboard'))
+        
+        return render_template('student/register.html', form=form)
+    return redirect(url_for('login'))
+
+@app.route('/student/results')
+def view_results():
+    if 'user_role' in session and session['user_role'] == 'student':
+        student_id = session['user_id']
+        semesters = Semester.query.filter_by(student_id=student_id).all()
+        return render_template('student/results.html', semesters=semesters)
+    return redirect(url_for('login'))
+
+@app.route('/student/report_missing_result', methods=['POST'])
+def report_missing_result():
+    if 'user_role' in session and session['user_role'] == 'student':
+        student_id = session['user_id']
+        # Logic to report missing results (e.g., send notification to admin)
+        flash('Missing result reported!', 'success')
+        return redirect(url_for('view_results'))
+    return redirect(url_for('login'))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and check_password_hash(user.password, form.password.data):
+            session['user_id'] = user.id
+            session['user_role'] = user.role
+            if user.role == 'admin':
+                return redirect(url_for('admin_dashboard'))
+            return redirect(url_for('student_dashboard'))
+        else:
+            flash('Invalid email or password', 'danger')
+    return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('user_role', None)
+    return redirect(url_for('login'))
 
 @app.route('/student/register', methods=['GET', 'POST'])
 def register():

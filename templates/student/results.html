@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <h1 class="text-3xl font-bold mb-6">My Semester Results</h1>
+    <div class="grid grid-cols-1 gap-6">
+        {% for semester in semesters %}
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold">Semester {{ semester.name }}</h2>
+            <ul class="mt-4">
+                {% for result in semester.results %}
+                <li>{{ result.course.name }}: {{ result.grade }}</li>
+                {% endfor %}
+            </ul>
+            <form action="{{ url_for('report_missing_result') }}" method="POST">
+                <button class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded mt-4" type="submit">Report Missing Results</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
