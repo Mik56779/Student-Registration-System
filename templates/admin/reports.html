@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold mb-6">Reports</h1>
+
+    <!-- Graph Section -->
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-semibold mb-4">Program Report: Student Performance</h2>
+        <canvas id="programReportChart" class="w-full h-64"></canvas>
+    </div>
+</div>
+
+<!-- Chart.js Integration -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('programReportChart').getContext('2d');
+    const programReportChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Computer Science', 'Business', 'Engineering', 'Mathematics', 'Literature'],
+            datasets: [{
+                label: 'Passed Students',
+                data: [150, 120, 180, 100, 90],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'Failed Students',
+                data: [20, 10, 30, 15, 25],
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

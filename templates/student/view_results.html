@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}View Results{% endblock %}
+
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold mb-6">View Results</h1>
+
+    <!-- Semester Selection -->
+    <div class="mb-6">
+        <label for="semester" class="block text-gray-700 font-semibold mb-2">Select Semester</label>
+        <select id="semester" name="semester" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            <option value="">Select Semester</option>
+            <option value="Semester 1">Semester 1</option>
+            <option value="Semester 2">Semester 2</option>
+            <option value="Semester 3">Semester 3</option>
+            <option value="Semester 4">Semester 4</option>
+        </select>
+    </div>
+
+    <!-- Results Table -->
+    <div class="bg-white p-8 rounded-lg shadow-lg">
+        <table class="w-full table-auto">
+            <thead>
+                <tr class="bg-gray-100 text-left">
+                    <th class="px-4 py-2">Course Name</th>
+                    <th class="px-4 py-2">Course Code</th>
+                    <th class="px-4 py-2">Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example result row -->
+                <tr>
+                    <td class="border px-4 py-2">Data Structures</td>
+                    <td class="border px-4 py-2">CS2001</td>
+                    <td class="border px-4 py-2">A</td>
+                </tr>
+                <tr>
+                    <td class="border px-4 py-2">Database Systems</td>
+                    <td class="border px-4 py-2">CS3001</td>
+                    <td class="border px-4 py-2">B+</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Report Missing Results Button -->
+    <div class="mt-6 text-center">
+        <button class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-500 transition duration-300">
+            <i class="fas fa-exclamation-circle"></i> Report Missing Results
+        </button>
+    </div>
+</div>
+{% endblock %}

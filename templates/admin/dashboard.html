@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Admin Dashboard</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center justify-center mb-4">
+                <i class="fas fa-user-plus text-blue-500 text-3xl"></i>
+            </div>
+            <h2 class="text-lg font-semibold mb-2 text-gray-800">Manage Registrations</h2>
+            <p class="text-gray-500">Approve or reject student registrations</p>
+            <a href="{{url_for('manage_registrations')}}" class="bg-blue-500 text-white mt-4 px-4 py-2 rounded hover:bg-blue-400 transition duration-300">Go to Registrations</a>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center justify-center mb-4">
+                <i class="fas fa-file-alt text-green-500 text-3xl"></i>
+            </div>
+            <h2 class="text-lg font-semibold mb-2 text-gray-800">View Reports</h2>
+            <p class="text-gray-500">Analyze student performance by program</p>
+            <a href="/admin/reports" class="bg-green-500 text-white mt-4 px-4 py-2 rounded hover:bg-green-400 transition duration-300">Go to Reports</a>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+            <div class="flex items-center justify-center mb-4">
+                <i class="fas fa-chart-line text-purple-500 text-3xl"></i>
+            </div>
+            <h2 class="text-lg font-semibold mb-2 text-gray-800">System Statistics</h2>
+            <p class="text-gray-500">Track system usage and student statistics</p>
+            <a href="/admin/statistics.html" class="bg-purple-500 text-white mt-4 px-4 py-2 rounded hover:bg-purple-400 transition duration-300">View Stats</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

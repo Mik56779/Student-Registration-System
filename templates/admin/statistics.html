@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mx-auto mt-10">
+    <div class="grid grid-cols-3 gap-6">
+        <div class="bg-blue-500 text-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold">Total Students</h2>
+            <p class="text-4xl mt-4">{{ total_students }}</p>
+        </div>
+        <div class="bg-green-500 text-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold">Total Courses</h2>
+            <p class="text-4xl mt-4">{{ total_courses }}</p>
+        </div>
+        <div class="bg-purple-500 text-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold">Total Registrations</h2>
+            <p class="text-4xl mt-4">{{ registrations_count }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
