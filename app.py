@@ -15,6 +15,12 @@ app.config['SECRET_KEY'] = 'your_secret_key'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+from wtforms import SelectMultipleField
+
+class RegistrationForm(FlaskForm):
+    courses = SelectMultipleField('Courses', coerce=int)
+    submit = SubmitField('Register')
+
 # Form for login
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(min=5, max=50)])
@@ -69,12 +75,6 @@ class RegistrationForm(FlaskForm):
 @app.route('/')
 def index():
     return render_template('index.html')
-
-from wtforms import SelectMultipleField
-
-class RegistrationForm(FlaskForm):
-    courses = SelectMultipleField('Courses', coerce=int)
-    submit = SubmitField('Register')
 
 @app.route('/student/register', methods=['GET', 'POST'])
 def register_courses():
@@ -158,15 +158,15 @@ def register():
     
     return render_template('student/registration.html', form=form)
 
-@app.route('/student/results', methods=['GET', 'POST'])
-def view_results():
-    if request.method == 'POST':
-        semester = request.form.get('semester')
-        student_id = 1  # Assume logged-in student ID for now
-        results = Result.query.filter_by(student_id=student_id, semester=semester).all()
-        return render_template('student/view_results.html', results=results, selected_semester=semester)
+# @app.route('/student/results', methods=['GET', 'POST'])
+# def view_results():
+#     if request.method == 'POST':
+#         semester = request.form.get('semester')
+#         student_id = 1  # Assume logged-in student ID for now
+#         results = Result.query.filter_by(student_id=student_id, semester=semester).all()
+#         return render_template('student/view_results.html', results=results, selected_semester=semester)
 
-    return render_template('student/view_results.html', results=[], selected_semester=None)
+#     return render_template('student/view_results.html', results=[], selected_semester=None)
 
 @app.route('/admin/dashboard')
 def admin_dashboard():
